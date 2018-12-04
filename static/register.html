@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+
+    <!-- This was forced upon us. I apologize. -->
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+
+    <script>
+        function submitForm() {
+            $("#registerform")
+            $.ajax({
+                url:'/register',
+                type:'post',
+                data:$('#registerform').serialize()
+            });
+        }
+    </script>
+</head>
+<body>
+    <form id="registerform" onsubmit="submitForm(); return false;">
+        <label for="username">Username:</label>
+        <input type="text" id ="username" name="username" value="billy" />
+        <label for="password">Password:</label>
+        <input type="password" id ="password" name="password" value="hunter2" />
+        <label for="passwordconfirm">Confirm Password:</label>
+        <input type="password" id ="passwordconfirm" name="passwordconfirm" value="hunter2" />
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
