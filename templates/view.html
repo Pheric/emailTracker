@@ -11,7 +11,7 @@
 			  crossorigin="anonymous"></script>
 </head>
 <body onload="onLoadEvent()">
-    <button onclick="document.cookie = '';">Log Out</button>
+    <button onclick="deAuth();">Log Out</button>
     <h1>Hello, {{username}}!</h1>
     <form id="genform">
         <label for="desc">Description</label>
@@ -24,7 +24,7 @@
     {% else %}
         <select id="trackers" onchange="chgTracker();">
             {% for t in trackers %}
-            <option value="{{ t.tId }}">{{ t.desc }}</option>
+                <option value="{{ t.tId }}">{{ t.desc }}</option>
             {% endfor %}
         </select>
         <a id="loadView" href="#">Load</a>
@@ -74,7 +74,11 @@
             });
         }
 
+        function deAuth() {
+            document.cookie = "secret=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            document.location.reload();
+        }
+
         $("#genform").on("submit", submitGenForm);
-        $("#sel-tracker").on("submit", submitSelForm);
     </script>
 </html>
