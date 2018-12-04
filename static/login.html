@@ -2,9 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <title>Login</title>
 
+    <!-- This was forced upon us. I apologize. -->
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+
+    <script>
+        function onPageLoad() {
+            if (window.location.pathname == "/loginfailed") {
+                document.getElementById("failedmsg").style.display = "block";
+            }
+        }
+
+        function submitForm() {
+            $.ajax({
+                url:'/login',
+                type:'post',
+                data:$('#loginform').serialize()
+            });
+        }
+    </script>
+</head>
+<body onload="onPageLoad()">
+    <h3 id="failedmsg" style="display: none">Login Failed!</h3>
+    <form id="loginform" target="" method="post" onsubmit="submitForm();">
+        <label for="username">Username:</label>
+        <input type="text" id ="username" name="username" value="billy" />
+        <label for="password">Password:</label>
+        <input type="password" id ="password" name="password" value="hunter2" />
+        <input type="submit" value="Submit">
+    </form>
+    <a href="/register">Register</a>
 </body>
 </html>

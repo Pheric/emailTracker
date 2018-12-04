@@ -1,35 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
+   <meta charset="UTF-8">
+   <title>Sign Up</title>
 
-    <!-- This was forced upon us. I apologize. -->
-    <script
-			  src="https://code.jquery.com/jquery-3.3.1.min.js"
-			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-			  crossorigin="anonymous"></script>
-
-    <script>
-        function submitForm() {
-            $("#registerform")
-            $.ajax({
-                url:'/register',
-                type:'post',
-                data:$('#registerform').serialize()
-            });
-        }
-    </script>
+   <!-- This was forced upon us. I apologize. -->
+   <script
+              src="https://code.jquery.com/jquery-3.3.1.min.js"
+              integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+              crossorigin="anonymous"></script>
 </head>
-<body>
-    <form id="registerform" onsubmit="submitForm(); return false;">
-        <label for="username">Username:</label>
-        <input type="text" id ="username" name="username" value="billy" />
-        <label for="password">Password:</label>
-        <input type="password" id ="password" name="password" value="hunter2" />
-        <label for="passwordconfirm">Confirm Password:</label>
-        <input type="password" id ="passwordconfirm" name="passwordconfirm" value="hunter2" />
-        <input type="submit" value="Submit">
-    </form>
+<body onload="onPageLoad()">
+   <h3 id="err" style="display: none">Registration failed: internal error, taken username, or some other error</h3>
+   <form id="registerform">
+       <label for="email">Email:</label>
+       <input type="text" id="email" name="email" value="billy.hunter@example.com" />
+       <label for="username">Username:</label>
+       <input type="text" id ="username" name="username" value="billy" />
+       <label for="password">Password:</label>
+       <input type="password" id ="password" name="password" onkeyup="checkPasswords()" />
+       <label for="password_confirm">Confirm Password:</label>
+       <input type="password" id ="password_confirm" name="password_confirm" style="color: green;" onkeyup="checkPasswords()" />
+       <input type="submit" id="submit" value="Submit">
+   </form>
+   <script>
+       function onPageLoad() {
+           if (window.location.pathname == "/registerfailed") {
+               document.getElementById("err").style.display = "block";
+           }
+       }
+
+       function submitForm(evt) {
+           evt.preventDefault();
+
+           $.ajax({
+               url: window.location.origin + '/register',
+               type:'post',
+               data:$('#registerform').serialize()
+           });
+       }
+
+       function checkPasswords() {
+           let p = document.getElementById("password"), p_ = document.getElementById("password_confirm");
+           if (p.value !== p_.value) {
+               p_.style.color = "red";
+               document.getElementById("submit").disabled = true;
+           } else {
+               p_.style.color = "green";
+               document.getElementById("submit").disabled = false;
+           }
+       }
+
+       $("#registerform").on("submit", submitForm);
+   </script>
 </body>
 </html>

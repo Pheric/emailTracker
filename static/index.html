@@ -2,9 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <title>EmailTracker</title>
 
+    <script>
+        function onPageLoad() {
+            let links = document.getElementsByClassName("link-placeholder");
+            for (let i = 0; i < links.length; i++) {
+                let e = links.item(i);
+                e.innerText = document.location.origin;
+            }
+        }
+    </script>
+</head>
+<body onload="onPageLoad()">
+    <h1>Track emails online for free!</h1>
+    <h3>How Does Email Tracking Work?</h3>
+    <p>
+        When emails are opened, they often automatically display images. As the sender of an email you can link an image
+        in such a way so that the receiver must download it from the internet first. This server allows you to generate a
+        unique link that you can put inside any email. When the email is received, the image (an invisible 1x1 pixel) is
+        downloaded and displayed. This service tracks when links are opened and by whom, so you know when your email has
+        been opened.
+    </p>
+
+    <h3>How Do I Start?</h3>
+    <p>
+        Simply press the "Generate" button below and paste the link into any email. In order to appear less suspicious,
+        you have the option to change the link however you wish by appending to the URL. For example, here's an
+        example link: <span style="text-decoration: dotted underline"><span class="link-placeholder">http://thissite.com</span>/t/4ee275cb-c3ce-4ba4-9dee-b0fbfb21afbf</span>.
+        You can make this into: <span style="text-decoration: dotted underline"><span class="link-placeholder">http://thissite.com</span>/t/4ee275cb-c3ce-4ba4-9dee-b0fbfb21afbf/notsuspicious/cats.gif</span>
+        if you wish, but be sure not to delete anything from the URL or it will not work. Enjoy!
+    </p>
+    <a href="/login">LOGIN</a>
 </body>
 </html>

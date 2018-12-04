@@ -1,8 +1,9 @@
 import logging
 import os
 import db
-import trackerHandler
+import siteHandler
 import trackerWebHandler
+import trackerHandler
 
 # Tracker links default TTL (one week)
 #                                          millis *  s  *   m *   h * d
@@ -24,12 +25,8 @@ def init():
     # Set up the database
     db.init()
 
-    # TESTING
-    # Trackers are normally generated when a user wants one made through the website
-    print(f"Generate tracker link with UUID: {trackerHandler.generateTracker().tId}")
-
-    # Run the tracker Flask application
-    trackerWebHandler.trackerApp.run()
+    # Run the Flask application
+    siteHandler.app.run()  # host="0.0.0.0"
 
 
 if __name__ == "__main__":

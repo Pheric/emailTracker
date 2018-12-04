@@ -5,14 +5,17 @@ from tracker import Tracker
 # activeTrackers = []
 
 
-def generateTracker():
+# https://xkcd.com/1987/
+def generateTracker(user, description):
     """
     Generates a Tracker object and inserts it into the db
+    :param user: Username of user generating the Tracker
+    :param description: Description of the tracker link
     :return: the new Tracker object
     """
-    tracker = Tracker()
+    tracker = Tracker(description)
 
-    db.insertTracker(tracker)
+    db.insertTracker(tracker, user)
 
     # activeTrackers.append(tracker)
     return tracker

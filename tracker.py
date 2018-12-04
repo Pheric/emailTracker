@@ -9,9 +9,10 @@ from utils import current_millis
 class Tracker:
     """Class to store information about any one tracking link"""
 
-    def __init__(self):
+    def __init__(self, desc):
         self.tId = uuid4()
         self.expiration = current_millis() + main.TRACKER_TTL_MILLIS
+        self.desc = desc
 
     def registerHit(self, clientIp):
         """

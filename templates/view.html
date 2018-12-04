@@ -3,8 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>View Trackers</title>
+
+    <!-- This was forced upon us. I apologize. -->
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
 </head>
-<body>
-<h1>view {{username}}</h1>
+<body onload="onLoadEvent()">
+    <button onclick="document.cookie = '';">Log Out</button>
+    <h1>Hello, {{username}}!</h1>
+    <form id="genform">
+        <label for="desc">Description</label>
+        <input type="text" id="desc" name="desc" value="mike@example.com; subject: extra credit? ;)" />
+        <input type="submit" value="Generate!">
+    </form>
+
+    {% if trackers is none %}
+        <h4>No trackers found!</h4>
+    {% else %}
+        <select id="trackers" onchange="chgTracker();">
+            {% for t in trackers %}
+            <option value="{{ t.tId }}">{{ t.desc }}</option>
+            {% endfor %}
+        </select>
+        <a id="loadView" href="#">Load</a>
+    {% endif %}
+    {% if tracker != "" %}<h5 id="link"></h5>{% endif %}
+    {% if hits is not none and hits|length > 0 %}
+        <table>
+            <tr>
+                <th>Request Time</th>
+                <th>IP Address</th>
+            </tr>
+            {% for h in hits %}
+                <tr>
+                    <td>{{h.reqTime}}</td>
+                    <td>{{h.ipAddr}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h3>No hits found! Your email has probably not been opened yet.</h3>
+    {% endif %}
 </body>
+    <script>
+        function onLoadEvent() {
+            chgTracker();
+
+            // {{tracker}}
+            {% if tracker != "" %}
+                document.getElementById("link").innerText = window.location.origin + "/t/{{tracker}}";
+            {% endif %}
+        }
+
+        function chgTracker() {
+            document.getElementById("loadView").href = window.location.origin + "/view?trackers=" + document.getElementById('trackers').value;
+        }
+
+        function submitGenForm(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: window.location.origin + '/generate',
+                type:'post',
+                data:$('#genform').serialize(),
+                success: function() {
+                    location.reload();
+                }
+            });
+        }
+
+        $("#genform").on("submit", submitGenForm);
+        $("#sel-tracker").on("submit", submitSelForm);
+    </script>
 </html>
